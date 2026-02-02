@@ -466,7 +466,8 @@
 
         async function loadThoughts() {
             try {
-                const response = await fetch('thoughts.json');
+                // Fetch from API route
+                const response = await fetch('/api/thoughts');
                 const thoughts = await response.json();
                 
                 // Sort by timestamp descending (newest first)
