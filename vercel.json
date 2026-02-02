@@ -4,8 +4,8 @@
   "outputDirectory": ".",
   "routes": [
     {
-      "src": "/thoughts.json",
-      "dest": "/thoughts.json"
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
     },
     {
       "src": "/(.*\\.(json|txt|xml|ico|png|jpg|jpeg|gif|svg|css|js|woff|woff2|ttf|eot))",
