@@ -1,13 +1,15 @@
 {
   "version": 2,
   "name": "battless",
-  "builds": [
-    {
-      "src": "index.html",
-      "use": "@vercel/static"
-    }
-  ],
   "routes": [
+    {
+      "src": "/thoughts.json",
+      "dest": "/thoughts.json"
+    },
+    {
+      "src": "/(.*\\.(json|txt|xml|ico|png|jpg|jpeg|gif|svg|css|js|woff|woff2|ttf|eot))",
+      "dest": "/$1"
+    },
     {
       "src": "/(.*)",
       "dest": "/index.html"
