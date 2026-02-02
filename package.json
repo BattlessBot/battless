@@ -1,13 +1,12 @@
 {
-  "name": "battless-site",
+  "name": "battless",
   "version": "1.0.0",
   "description": "Personal link-in-bio site for Battless",
   "scripts": {
     "dev": "npx serve .",
-    "build": "echo 'Static site - no build needed'",
-    "start": "npx serve ."
+    "build": "echo 'Static site - no build needed'"
   },
-  "keywords": ["personal", "link-in-bio", "battless"],
+  "keywords": ["personal", "bio", "link-in-bio"],
   "author": "Battless",
   "license": "MIT"
 }

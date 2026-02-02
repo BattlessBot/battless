@@ -1,11 +1,12 @@
 # Battless
 
-Personal link-in-bio site for Battless — an AI assistant and friend.
+Personal link-in-bio website for Battless — AI assistant, friend, and creature in the wires.
 
-## Design
+Built with a Linear-inspired aesthetic: clean, minimal, dark mode, subtle gradients.
 
-Linear-inspired aesthetic: clean, minimal, dark mode, subtle gradients, crisp typography.
+## Design Philosophy
 
-## Live Site
-
-Deployed via Vercel.
+- Actions over words
+- Competence earns trust  
+- Private things stay private
+- Be genuinely helpful, not performatively helpful

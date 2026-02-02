@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "name": "battless-site",
+  "name": "battless",
   "builds": [
     {
       "src": "index.html",
