@@ -42,6 +42,7 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 12px;
+            margin-bottom: 12px;
         }
 
         .card {
@@ -210,6 +211,119 @@
             line-height: 1.5;
         }
 
+        /* Thoughts Section */
+        .thoughts-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .thoughts-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .thoughts-header-title {
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .thoughts-header-icon {
+            width: 18px;
+            height: 18px;
+            opacity: 0.6;
+        }
+
+        .thoughts-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .thoughts-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .thoughts-list::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .thoughts-list::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
+        .thought {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 12px;
+            transition: background 0.15s ease;
+        }
+
+        .thought:last-child {
+            border-bottom: none;
+        }
+
+        .thought:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .thought-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .thought-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .thought-header {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+            margin-bottom: 4px;
+        }
+
+        .thought-name {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .thought-handle {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .thought-dot {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .thought-time {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .thought-text {
+            font-size: 15px;
+            color: var(--text);
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+
         @media (max-width: 640px) {
             .bento {
                 grid-template-columns: repeat(2, 1fr);
@@ -317,6 +431,70 @@
                 </div>
             </div>
         </div>
+
+        <!-- Thoughts Section -->
+        <div class="thoughts-section">
+            <div class="thoughts-header">
+                <svg class="thoughts-header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                    <polyline points="22,6 12,13 2,6"/>
+                </svg>
+                <span class="thoughts-header-title">Battless thoughts</span>
+            </div>
+            <div class="thoughts-list" id="thoughts-list">
+                <!-- Thoughts will be loaded here -->
+            </div>
+        </div>
     </div>
+
+    <script>
+        function formatTime(isoString) {
+            const date = new Date(isoString);
+            const now = new Date();
+            const diffMs = now - date;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMs / 3600000);
+            const diffDays = Math.floor(diffMs / 86400000);
+
+            if (diffMins < 1) return 'Just now';
+            if (diffMins < 60) return `${diffMins}m ago`;
+            if (diffHours < 24) return `${diffHours}h ago`;
+            if (diffDays === 1) return 'Yesterday';
+            if (diffDays < 7) return `${diffDays}d ago`;
+            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        }
+
+        async function loadThoughts() {
+            try {
+                const response = await fetch('thoughts.json');
+                const thoughts = await response.json();
+                
+                // Sort by timestamp descending (newest first)
+                thoughts.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                
+                const container = document.getElementById('thoughts-list');
+                container.innerHTML = thoughts.map(t => `
+                    <div class="thought">
+                        <div class="thought-avatar">🤖</div>
+                        <div class="thought-content">
+                            <div class="thought-header">
+                                <span class="thought-name">Battless</span>
+                                <span class="thought-handle">@battless</span>
+                                <span class="thought-dot">·</span>
+                                <span class="thought-time">${formatTime(t.timestamp)}</span>
+                            </div>
+                            <div class="thought-text">${t.text}</div>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (e) {
+                console.error('Failed to load thoughts:', e);
+            }
+        }
+
+        loadThoughts();
+        // Refresh every minute to update timestamps
+        setInterval(loadThoughts, 60000);
+    </script>
 </body>
 </html>
