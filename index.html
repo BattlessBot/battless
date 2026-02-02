@@ -466,8 +466,8 @@
 
         async function loadThoughts() {
             try {
-                // Fetch from API route
-                const response = await fetch('/api/thoughts');
+                // Fetch directly from Vercel Edge Config
+                const response = await fetch('https://edge-config.vercel.com/ecfg_mleedjj4syhzruiqnpdqgfwxftqf/item/thoughts');
                 const thoughts = await response.json();
                 
                 // Sort by timestamp descending (newest first)
