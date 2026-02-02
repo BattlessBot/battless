@@ -1,6 +1,7 @@
 {
   "version": 2,
   "name": "battless",
+  "outputDirectory": ".",
   "routes": [
     {
       "src": "/thoughts.json",
